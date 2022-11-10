@@ -29,11 +29,13 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //必须赶在布局呈现之前实现有关效果，所以用代码实现状态栏融合效果事先必须提前
         val decorView = window.decorView
         @Suppress("DEPRECATION")
         decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         window.statusBarColor = Color.TRANSPARENT
         setContentView(R.layout.activity_weather)
+        //分别判断以上位置是否为空，如何为空就给经度，纬度和位置传入有关的数值
         if (viewModel.locationLng.isEmpty()){
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
@@ -43,6 +45,7 @@ class WeatherActivity : AppCompatActivity() {
         if (viewModel.placeName.isEmpty()){
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
         }
+        //让viewModel把观察完成的数据传入observe方法
         viewModel.weatherLiveData.observe(this, Observer { result ->
             val weather = result.getOrNull()
             if (weather != null){
