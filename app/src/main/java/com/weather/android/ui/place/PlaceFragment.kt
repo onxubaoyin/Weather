@@ -17,6 +17,7 @@ import com.weather.android.R
 import com.weather.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
 
+
 class PlaceFragment : Fragment() {
     val viewModel by lazy {
         ViewModelProvider(this)[PlaceViewModel::class.java]
